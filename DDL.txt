@@ -1,0 +1,67 @@
+CREATE TABLE "Hospital" (
+	"Provider Number"	INTEGER NOT NULL UNIQUE,
+	"Name"	TEXT NOT NULL,
+	"Governate"	TEXT NOT NULL,
+	PRIMARY KEY("Provider Number" AUTOINCREMENT)
+)
+
+CREATE TABLE "Hospital_Mortality_Rate" (
+	"Pro_Num"	INTEGER NOT NULL,
+	"Mortal_ID"	INTEGER NOT NULL,
+	PRIMARY KEY("Pro_Num","Mortal_ID"),
+	FOREIGN KEY("Pro_Num") REFERENCES "Hospital"("Provider Number"),
+	FOREIGN KEY("Mortal_ID") REFERENCES "Mortality_Rates"("Mortal ID")
+)
+
+CREATE TABLE "Hospital_Rank" (
+	"Pro_Num"	INTEGER,
+	"Rank_ID"	INTEGER,
+	FOREIGN KEY("Rank_ID") REFERENCES "Ranks"("Rank ID"),
+	FOREIGN KEY("Pro_Num") REFERENCES "Hospital"("Provider Number"),
+	PRIMARY KEY("Rank_ID","Pro_Num")
+)
+
+CREATE TABLE "Hospital_Status" (
+	"Pro Num"	INTEGER,
+	"Status ID"	INTEGER,
+	PRIMARY KEY("Pro Num","Status ID"),
+	FOREIGN KEY("Pro Num") REFERENCES "Hospital"("Provider Number"),
+	FOREIGN KEY("Status ID") REFERENCES "Status"("Status ID")
+)
+
+CREATE TABLE "Mortality_Rates" (
+	"Mortal ID"	INTEGER NOT NULL UNIQUE,
+	"Mortality Rate"	NUMERIC,
+	"Month"	REAL NOT NULL,
+	"Standard ID"	INTEGER,
+	FOREIGN KEY("Standard ID") REFERENCES "Standards"("Standard ID"),
+	PRIMARY KEY("Mortal ID" AUTOINCREMENT)
+)
+
+CREATE TABLE "Ranks" (
+	"Rank ID"	INTEGER NOT NULL UNIQUE,
+	"Ranks"	INTEGER NOT NULL,
+	"Status ID"	INTEGER,
+	FOREIGN KEY("Status ID") REFERENCES "Status"("Status ID"),
+	PRIMARY KEY("Rank ID" AUTOINCREMENT)
+)
+
+CREATE TABLE "Rules" (
+	"Rule ID"	INTEGER NOT NULL UNIQUE,
+	"Rules"	TEXT,
+	PRIMARY KEY("Rule ID" AUTOINCREMENT)
+)
+
+CREATE TABLE "Standards" (
+	"Standard ID"	INTEGER NOT NULL UNIQUE,
+	"Standard Mortality Rates"	INTEGER NOT NULL,
+	"Disease"	TEXT,
+	PRIMARY KEY("Standard ID" AUTOINCREMENT)
+)
+
+CREATE TABLE "Status" (
+	"Status ID"	INTEGER NOT NULL UNIQUE,
+	"Status"	TEXT,
+	PRIMARY KEY("Status ID" AUTOINCREMENT)
+)
+
